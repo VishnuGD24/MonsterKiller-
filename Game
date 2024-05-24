@@ -1,0 +1,63 @@
+namespace MonsterKiller
+{
+    class Game
+    {
+        private int playerHealth = 100;
+        private int enemyHealth = 150;
+        private int enemyDamage = 15;
+        private int enemyDamageBlocked;
+        private int hammerDamage = 10;
+        private int axeDamage = 12;
+        private int swordDamage = 15;
+        Random random = new Random();
+
+        public void HammerCombat()
+        {
+            
+            enemyDamageBlocked = random.Next(1, 5);
+            string prompt = "You are facing the Monster";
+            string[] combatChoices = { "Attack", "Defend", "Run" };
+            Choices choices = new Choices(combatChoices, prompt);
+            do
+            {
+                choices.DisplayChoices();
+                int selectedIndex = choices.SelectedChoice();
+                switch (selectedIndex)
+                {
+                    case 0:
+                        Console.WriteLine($"You dealt {hammerDamage} damage to the Monster");
+                        enemyHealth -= hammerDamage;
+                        
+                        if(enemyHealth > 0)
+                        {
+                            Console.WriteLine($"Monster attacks you back");
+                            playerHealth -= enemyDamage;
+                        }
+
+                        Console.WriteLine($"You take {enemyDamage} damage");
+                        Console.WriteLine($"Your health is {playerHealth}");
+                        break;
+
+                    case 1:
+                        Console.WriteLine($"Monster attacks you, but you defended");
+                        playerHealth -= enemyDamageBlocked;
+                        Console.WriteLine(playerHealth);
+                        break;
+
+                    case 2:
+                        Console.WriteLine("GAME OVER!!! YOU LOSE");
+                        break;
+                }
+                if(playerHealth <= 0)
+                {
+                    Console.WriteLine("You Died!!!");
+                }
+                if(enemyHealth <= 0)
+                {
+                    Console.WriteLine("You killed the Monster");
+                }
+            } while (enemyHealth > 0 || playerHealth > 0) ;
+        }
+
+    }
+}
