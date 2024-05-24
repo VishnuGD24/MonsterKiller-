@@ -1,0 +1,81 @@
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+
+namespace MonsterKiller
+{
+    class Choices
+    {
+        public string[] PlayerChoices;
+        public string Prompt;
+        public int SelectedIndex;
+
+
+        public Choices(string[] playerChoices, string prompt)
+        {
+            PlayerChoices = playerChoices;
+            Prompt = prompt;
+            SelectedIndex = 0;
+        }
+
+        public void DisplayChoices()
+        {
+            Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine(Prompt);
+            for (int i = 0; i < PlayerChoices.Length; i++)
+            {
+                string currentChoice = PlayerChoices[i];
+                string prefix;
+                if (i == SelectedIndex)
+                {
+                    prefix = ">";
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
+
+                }
+                else
+                {
+                    prefix = "";
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+
+                }
+
+                Console.WriteLine($"{prefix} ||{currentChoice}||");
+                Console.ResetColor();
+            }
+        }
+
+        public int SelectedChoice()
+        {
+            ConsoleKey keyPressed;
+            do
+            {
+                DisplayChoices();
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                keyPressed = keyInfo.Key;
+
+                if (keyPressed == ConsoleKey.UpArrow)
+                {
+                    SelectedIndex--;
+                    if (SelectedIndex == -1)
+                    {
+                        SelectedIndex = PlayerChoices.Length - 1;
+                    }
+                }
+                else if (keyPressed == ConsoleKey.DownArrow)
+                {
+                    SelectedIndex++;
+                    if (SelectedIndex == PlayerChoices.Length)
+                    {
+                        SelectedIndex = 0;
+                    }
+                }
+
+            } while (keyPressed != ConsoleKey.Enter);
+
+            return SelectedIndex;
+        }
+
+    }
+}
