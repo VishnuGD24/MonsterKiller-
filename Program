@@ -1,0 +1,43 @@
+using System;
+
+namespace MonsterKiller
+{
+
+    class Program
+    {
+
+        static public void Main()
+        {
+            PlayerChosenWeapon();
+           
+        }
+
+        static public void PlayerChosenWeapon()
+        {
+            string prompt = "Welcome to Monster Killer! Choose your weapon of choice: ";
+            string[] weaponChoice = { "Hammer", "Axe", "Sword" };
+            Choices choices = new Choices(weaponChoice, prompt);
+            choices.DisplayChoices();
+            int selectedIndex = choices.SelectedChoice();
+            Game game = new Game();
+            
+            switch (selectedIndex)
+            {
+                case 0:
+                    Console.WriteLine("You equipped Hammer");
+                    game.HammerCombat();
+                    break;
+
+                case 1:
+                    Console.WriteLine("You equipped Axe");
+                    break;
+
+                case 2:
+                    Console.WriteLine("You equipped Sword");
+                    break;
+            }
+        }
+
+
+    }
+}
